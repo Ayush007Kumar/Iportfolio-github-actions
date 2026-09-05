@@ -19,8 +19,8 @@ jobs:
       - name: Say hello
         run: echo "Hello Dosto"
 
-     repo-name:
-       runs_on: ubuntu:latest
-       steps:
-         - name: Show Repository Name
-           run: echo "The repository name is : ${{ github.event.repository.name }}"
+    repo-name:
+      runs_on: ubuntu:latest
+      steps:
+        - name: Show Repository Name
+          run: echo "The repository name is : ${{ github.event.repository.name }}"
