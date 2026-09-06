@@ -1,780 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ShopKart - Online Shopping</title>
-  <meta name="description" content="A modern e-commerce storefront inspired by leading Indian marketplaces." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --brand:#2874f0;
-      --brand-dark:#135fd1;
-      --accent:#ff9f00;
-      --accent2:#fb641b;
-      --bg:#f1f3f6;
-      --text:#172337;
-      --muted:#6f7782;
-      --card:#ffffff;
-      --green:#188038;
-      --shadow:0 2px 10px rgba(0,0,0,.08);
-      --radius:14px;
-    }
-
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-    }
-
-    a{text-decoration:none;color:inherit}
-    button,input{font:inherit}
-    img{display:block;max-width:100%}
-
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:1000;
-      background:var(--brand);
-      color:#fff;
-      box-shadow:0 1px 8px rgba(0,0,0,.18);
-    }
-
-    .topbar-inner{
-      max-width:1400px;
-      margin:auto;
-      min-height:68px;
-      display:grid;
-      grid-template-columns:auto minmax(280px,1fr) auto;
-      gap:22px;
-      align-items:center;
-      padding:10px 24px;
-    }
-
-    .logo{
-      font-size:25px;
-      font-weight:800;
-      letter-spacing:-1px;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
-    }
-
-    .logo-badge{
-      width:34px;height:34px;border-radius:9px;
-      background:#fff;color:var(--brand);
-      display:grid;place-items:center;
-      font-size:20px;font-weight:900;
-    }
-
-    .search{
-      background:#fff;
-      border-radius:8px;
-      display:flex;
-      align-items:center;
-      overflow:hidden;
-      box-shadow:0 1px 3px rgba(0,0,0,.16);
-    }
-
-    .search input{
-      flex:1;
-      border:none;
-      outline:none;
-      padding:14px 16px;
-      min-width:0;
-      color:#222;
-    }
-
-    .search button{
-      border:0;
-      background:#fff;
-      color:var(--brand);
-      width:50px;
-      cursor:pointer;
-      font-size:20px;
-    }
-
-    .nav-actions{display:flex;gap:14px;align-items:center}
-    .nav-btn{
-      border:0;
-      background:#fff;
-      color:var(--brand);
-      font-weight:700;
-      padding:11px 18px;
-      border-radius:6px;
-      cursor:pointer;
-    }
-    .nav-link{font-weight:600;white-space:nowrap}
-    .cart{display:flex;gap:7px;align-items:center}
-
-    .categories{
-      background:#fff;
-      box-shadow:0 2px 8px rgba(0,0,0,.07);
-      overflow:auto hidden;
-    }
-
-    .categories-inner{
-      max-width:1400px;
-      margin:auto;
-      display:flex;
-      gap:34px;
-      justify-content:center;
-      min-width:max-content;
-      padding:14px 24px;
-    }
-
-    .cat{
-      width:96px;
-      text-align:center;
-      font-size:13px;
-      font-weight:600;
-      color:#333;
-      cursor:pointer;
-    }
-
-    .cat-icon{
-      width:58px;height:58px;
-      margin:0 auto 8px;
-      border-radius:50%;
-      display:grid;place-items:center;
-      font-size:30px;
-      background:#eef4ff;
-      transition:.2s;
-    }
-
-    .cat:hover .cat-icon{transform:translateY(-2px);background:#dce9ff}
-
-    .container{max-width:1400px;margin:0 auto;padding:16px 18px 34px}
-
-    .hero{
-      position:relative;
-      border-radius:var(--radius);
-      overflow:hidden;
-      box-shadow:var(--shadow);
-      background:#dbe9ff;
-      min-height:330px;
-    }
-
-    .slide{
-      min-height:330px;
-      padding:42px 60px;
-      display:none;
-      align-items:center;
-      justify-content:space-between;
-      gap:30px;
-    }
-    .slide.active{display:flex}
-    .slide:nth-child(1){background:linear-gradient(110deg,#dbeafe,#eef6ff 55%,#fff1db)}
-    .slide:nth-child(2){background:linear-gradient(110deg,#fff0e3,#fff7ef 55%,#e3f1ff)}
-    .slide:nth-child(3){background:linear-gradient(110deg,#e6f8ef,#f5fff9 55%,#e8edff)}
-
-    .hero-copy{max-width:580px}
-    .eyebrow{
-      color:var(--brand);
-      font-weight:800;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      font-size:13px;
-      margin-bottom:10px;
-    }
-    .hero h1{
-      font-size:clamp(32px,4.7vw,64px);
-      line-height:1;
-      margin:0 0 16px;
-      letter-spacing:-2px;
-    }
-    .hero p{font-size:18px;color:#4a5565;line-height:1.6;margin:0 0 24px}
-    .cta{
-      display:inline-block;
-      border:0;
-      border-radius:8px;
-      background:var(--accent2);
-      color:#fff;
-      padding:13px 22px;
-      font-weight:800;
-      cursor:pointer;
-      box-shadow:0 6px 16px rgba(251,100,27,.25);
-    }
-    .hero-art{
-      width:min(38vw,430px);
-      min-width:260px;
-      aspect-ratio:1/1;
-      border-radius:30px;
-      background:#fff;
-      box-shadow:0 18px 50px rgba(0,0,0,.12);
-      display:grid;place-items:center;
-      font-size:150px;
-      transform:rotate(2deg);
-    }
-
-    .dots{
-      position:absolute;left:50%;bottom:16px;transform:translateX(-50%);
-      display:flex;gap:7px;
-    }
-    .dot{
-      width:9px;height:9px;border-radius:50%;
-      border:0;background:#b9c2cf;cursor:pointer;padding:0
-    }
-    .dot.active{width:25px;border-radius:10px;background:var(--brand)}
-
-    .section{
-      background:#fff;
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      margin-top:18px;
-      overflow:hidden;
-    }
-    .section-header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:20px 22px 8px;
-    }
-    .section-header h2{margin:0;font-size:23px;letter-spacing:-.5px}
-    .view-all{
-      background:var(--brand);
-      color:#fff;
-      padding:10px 15px;
-      border-radius:7px;
-      font-size:13px;
-      font-weight:700;
-    }
-
-    .products{
-      display:grid;
-      grid-template-columns:repeat(6,1fr);
-      gap:12px;
-      padding:14px 18px 22px;
-    }
-    .product{
-      border:1px solid #edf0f3;
-      border-radius:12px;
-      padding:13px;
-      min-width:0;
-      transition:.2s ease;
-      cursor:pointer;
-      background:#fff;
-    }
-    .product:hover{
-      transform:translateY(-4px);
-      box-shadow:0 12px 24px rgba(0,0,0,.09);
-      border-color:#dce3ea;
-    }
-
-    .product-img{
-      background:#f7f8fa;
-      height:190px;
-      border-radius:10px;
-      display:grid;place-items:center;
-      overflow:hidden;
-      margin-bottom:12px;
-      font-size:85px;
-    }
-    .product-img img{width:100%;height:100%;object-fit:cover}
-
-    .product-title{
-      font-size:14px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      margin:4px 0 8px;
-      font-weight:600;
-    }
-    .price{font-weight:800;font-size:17px}
-    .old-price{color:#878787;text-decoration:line-through;margin-left:6px;font-size:12px}
-    .discount{color:var(--green);font-size:12px;font-weight:700;margin-left:6px}
-    .rating{
-      margin-top:8px;
-      display:inline-block;
-      background:var(--green);
-      color:#fff;
-      font-size:11px;
-      font-weight:700;
-      border-radius:4px;
-      padding:4px 6px;
-    }
-
-    .promo-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:16px;
-      margin-top:18px;
-    }
-    .promo{
-      min-height:180px;
-      border-radius:var(--radius);
-      padding:28px;
-      box-shadow:var(--shadow);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      overflow:hidden;
-    }
-    .promo:nth-child(1){background:linear-gradient(135deg,#ffe5d0,#fff)}
-    .promo:nth-child(2){background:linear-gradient(135deg,#dcecff,#fff)}
-    .promo:nth-child(3){background:linear-gradient(135deg,#e7f8e7,#fff)}
-    .promo h3{font-size:22px;margin:0 0 8px}
-    .promo p{margin:0;color:#5f6773}
-    .promo-icon{font-size:72px}
-
-    .newsletter{
-      margin-top:18px;
-      border-radius:var(--radius);
-      padding:30px;
-      background:#172337;
-      color:#fff;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:24px;
-    }
-    .newsletter h3{margin:0 0 6px;font-size:24px}
-    .newsletter p{margin:0;color:#b9c1cc}
-    .newsletter-form{
-      display:flex;
-      min-width:min(100%,440px);
-    }
-    .newsletter input{
-      flex:1;border:0;outline:0;
-      padding:13px 14px;
-      border-radius:8px 0 0 8px;
-    }
-    .newsletter button{
-      border:0;
-      background:var(--accent);
-      padding:0 18px;
-      font-weight:800;
-      border-radius:0 8px 8px 0;
-      cursor:pointer;
-    }
-
-    footer{
-      background:#0f1724;
-      color:#c3cad5;
-      padding:42px 20px 26px;
-    }
-    .footer-grid{
-      max-width:1400px;margin:auto;
-      display:grid;
-      grid-template-columns:2fr repeat(3,1fr);
-      gap:36px;
-    }
-    footer h4{color:#fff;margin:0 0 12px}
-    footer a{display:block;margin:8px 0;font-size:13px}
-    .copyright{
-      max-width:1400px;margin:30px auto 0;
-      padding-top:20px;border-top:1px solid #263246;
-      font-size:13px;text-align:center
-    }
-
-    .toast{
-      position:fixed;
-      right:20px;
-      bottom:20px;
-      background:#172337;
-      color:#fff;
-      padding:13px 18px;
-      border-radius:8px;
-      transform:translateY(100px);
-      opacity:0;
-      transition:.3s;
-      z-index:2000;
-    }
-    .toast.show{transform:translateY(0);opacity:1}
-
-    @media (max-width:1100px){
-      .products{grid-template-columns:repeat(3,1fr)}
-      .promo-grid{grid-template-columns:1fr 1fr}
-      .promo:last-child{grid-column:1/-1}
-      .nav-link{display:none}
-    }
-    @media (max-width:760px){
-      .topbar-inner{grid-template-columns:1fr auto;gap:10px;padding:10px 14px}
-      .search{grid-column:1/-1;grid-row:2}
-      .nav-btn{display:none}
-      .slide{padding:30px 24px;min-height:300px}
-      .hero-art{display:none}
-      .products{grid-template-columns:repeat(2,1fr)}
-      .product-img{height:150px}
-      .promo-grid{grid-template-columns:1fr}
-      .promo:last-child{grid-column:auto}
-      .newsletter{flex-direction:column;align-items:flex-start}
-      .newsletter-form{min-width:100%;width:100%}
-      .footer-grid{grid-template-columns:1fr 1fr}
-    }
-    @media (max-width:470px){
-      .container{padding:10px 10px 24px}
-      .categories-inner{gap:18px;padding:12px}
-      .cat{width:78px}
-      .products{grid-template-columns:1fr 1fr;gap:8px;padding:10px}
-      .product{padding:9px}
-      .product-img{height:130px;font-size:60px}
-      .footer-grid{grid-template-columns:1fr}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Ayush Kumar — DevOps Engineer, Cloud Engineer and Automation Specialist. AWS, Kubernetes, Terraform, Jenkins, Docker and serverless cloud engineering.">
+<title>Ayush Kumar | DevOps & Cloud Engineer</title>
+<style>
+:root{
+  --bg:#06080d;--surface:#0d1118;--surface2:#111722;--text:#f4f7fb;--muted:#9aa7b7;
+  --line:rgba(255,255,255,.09);--accent:#65d6ff;--accent2:#8b7cff;--good:#49e39a;
+  --max:1180px;--shadow:0 25px 80px rgba(0,0,0,.42)
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 85% 5%,rgba(101,214,255,.10),transparent 28%),radial-gradient(circle at 10% 30%,rgba(139,124,255,.08),transparent 30%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
+a{color:inherit;text-decoration:none}button,input{font:inherit}
+.container{width:min(var(--max),92%);margin:auto}
+header{position:fixed;z-index:50;top:0;left:0;right:0;padding:17px 0;background:rgba(6,8,13,.62);backdrop-filter:blur(18px);border-bottom:1px solid transparent;transition:.3s}
+header.scrolled{border-color:var(--line);background:rgba(6,8,13,.88)}
+.nav{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:.2px}
+.logoMark{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#061018;box-shadow:0 0 35px rgba(101,214,255,.22);font-weight:1000}
+.navlinks{display:flex;gap:23px;color:#b9c3d0;font-size:.9rem}.navlinks a:hover{color:white}
+.navbtn{border:1px solid var(--line);background:rgba(255,255,255,.05);padding:9px 14px;border-radius:999px;color:white;cursor:pointer}
+.hero{min-height:100vh;display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center;padding:130px 0 80px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:500px;height:500px;border:1px solid rgba(101,214,255,.12);border-radius:50%;right:-170px;top:100px;box-shadow:0 0 100px rgba(101,214,255,.06) inset}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.035);color:#c8d2de;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 15px var(--good)}
+h1{font-size:clamp(3.3rem,7vw,6.6rem);line-height:.94;letter-spacing:-.065em;margin:20px 0}
+.gradient{color:transparent;background:linear-gradient(100deg,#fff 15%,var(--accent) 52%,#a49bff);-webkit-background-clip:text;background-clip:text}
+.hero p{font-size:1.08rem;color:#aeb9c7;max-width:680px}
+.heroMeta{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0;color:#cbd4df}
+.heroMeta span{border:1px solid var(--line);background:rgba(255,255,255,.035);padding:7px 11px;border-radius:8px;font-size:.82rem}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:27px}
+.primary,.secondary{padding:13px 18px;border-radius:11px;font-weight:850;cursor:pointer;border:1px solid var(--line);transition:.25s}
+.primary{background:white;color:#080b10}.secondary{background:rgba(255,255,255,.05);color:white}
+.primary:hover,.secondary:hover{transform:translateY(-3px);box-shadow:0 15px 30px rgba(0,0,0,.3)}
+.terminal{position:relative;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,#101722,#090c12);box-shadow:var(--shadow);padding:0;overflow:hidden;transform:perspective(1200px) rotateY(-5deg) rotateX(2deg);transition:.5s}
+.terminal:hover{transform:perspective(1200px) rotateY(0) rotateX(0) translateY(-6px)}
+.termbar{height:44px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 15px;gap:7px}.dot{width:9px;height:9px;border-radius:50%;background:#667}
+.termtitle{margin-left:auto;margin-right:auto;color:#748092;font-size:.76rem}
+.termbody{padding:23px;font-family:"SFMono-Regular",Consolas,monospace;font-size:.82rem;color:#aeb9c7}
+.termline{margin:12px 0}.prompt{color:var(--good)}.cmd{color:#fff}.comment{color:#637186}
+.bigStats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:25px}.stat{padding:17px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)}.stat b{display:block;font-size:1.5rem}.stat small{color:var(--muted)}
+section{padding:85px 0}.sectionHead{display:flex;align-items:end;justify-content:space-between;margin-bottom:27px;gap:20px}.kicker{color:var(--accent);font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.16em}.sectionHead h2{font-size:clamp(2rem,4vw,3rem);letter-spacing:-.04em;margin:5px 0}.sectionHead p{color:var(--muted);max-width:520px;margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018));padding:23px;transition:.3s;position:relative;overflow:hidden}.card:hover{transform:translateY(-6px);border-color:rgba(101,214,255,.27);box-shadow:0 20px 55px rgba(0,0,0,.3)}.card:after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;right:-55px;top:-55px;background:rgba(101,214,255,.08)}
+.card h3{margin:10px 0 7px;font-size:1.15rem}.card p{color:var(--muted);font-size:.9rem;margin:0}.icon{font-size:1.55rem}.tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:17px}.tag{font-size:.72rem;padding:5px 8px;border:1px solid var(--line);border-radius:7px;color:#c6d0dc;background:rgba(255,255,255,.025)}
+.skills{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.skill{padding:15px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025);display:flex;align-items:center;justify-content:space-between}.skill span{color:#d7dfe8;font-size:.88rem}.level{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 12px var(--good)}
+.timeline{position:relative;margin-left:12px;padding-left:30px}.timeline:before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--line)}.role{position:relative;margin-bottom:35px}.role:before{content:"";position:absolute;left:-35px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px rgba(101,214,255,.55)}.roleTop{display:flex;justify-content:space-between;gap:20px}.role h3{margin:0}.role .date{color:var(--accent);font-size:.82rem;white-space:nowrap}.company{color:#c6d0dc;font-weight:700}.role p,.role li{color:var(--muted);font-size:.9rem}.role ul{padding-left:18px}
+.project{min-height:290px;display:flex;flex-direction:column}.projectTop{display:flex;justify-content:space-between;align-items:center}.project .number{font-family:monospace;color:#617084}.project ul{padding-left:18px;color:var(--muted);font-size:.86rem}.project .tags{margin-top:auto}
+.feature{display:grid;grid-template-columns:1fr 1fr;gap:18px}.featureCard{border:1px solid var(--line);border-radius:20px;padding:27px;background:linear-gradient(140deg,rgba(101,214,255,.06),rgba(139,124,255,.035));}.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:22px}.node{padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:#0d131b;font-size:.78rem}.arrow{color:var(--accent)}
+.certgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.cert{padding:18px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)}.cert b{display:block}.cert span{color:var(--muted);font-size:.78rem}
+.contact{border:1px solid var(--line);border-radius:25px;padding:40px;background:radial-gradient(circle at 80% 20%,rgba(101,214,255,.1),transparent 32%),#0c1118;display:flex;justify-content:space-between;gap:30px;align-items:center}.contact h2{font-size:2.5rem;margin:0}.contact p{color:var(--muted)}
+footer{padding:30px 0 50px;color:#6f7b8b;border-top:1px solid var(--line);font-size:.82rem}
+.reveal{opacity:0;transform:translateY(18px);transition:.7s}.reveal.show{opacity:1;transform:none}
+.toast{position:fixed;right:20px;bottom:20px;background:#121923;border:1px solid var(--line);padding:13px 17px;border-radius:11px;z-index:80;opacity:0;transform:translateY(15px);transition:.25s;box-shadow:var(--shadow)}.toast.show{opacity:1;transform:none}
+@media(max-width:950px){.hero{grid-template-columns:1fr}.terminal{max-width:700px}.grid{grid-template-columns:1fr 1fr}.skills{grid-template-columns:1fr 1fr}.certgrid{grid-template-columns:1fr 1fr}.feature{grid-template-columns:1fr}}
+@media(max-width:650px){.navlinks{display:none}.hero{padding-top:115px}.bigStats{grid-template-columns:1fr 1fr}.grid,.skills,.certgrid{grid-template-columns:1fr}.roleTop{display:block}.contact{display:block}.contact h2{font-size:2rem}section{padding:65px 0}}
+</style>
 </head>
-
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a href="#" class="logo">
-        <span class="logo-badge">S</span>
-        ShopKart
-      </a>
+<header id="header"><div class="container nav">
+  <a class="logo" href="#home"><span class="logoMark">AK</span><span>AYUSH KUMAR</span></a>
+  <nav class="navlinks"><a href="#about">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#certifications">Certifications</a></nav>
+  <a class="navbtn" href="mailto:ayu199496@gmail.com">Let's Connect</a>
+</div></header>
 
-      <form class="search" onsubmit="searchProducts(event)">
-        <input id="searchInput" type="search" placeholder="Search for products, brands and more" />
-        <button aria-label="Search">⌕</button>
-      </form>
-
-      <div class="nav-actions">
-        <button class="nav-btn" onclick="showToast('Login demo opened')">Login</button>
-        <a class="nav-link" href="#deals">Become a Seller</a>
-        <a class="nav-link" href="#footer">More ▾</a>
-        <a class="cart" href="#" onclick="showToast('Your cart is empty'); return false;">🛒 <b>Cart</b></a>
-      </div>
+<main>
+<section class="hero container" id="home">
+  <div>
+    <div class="eyebrow"><span class="pulse"></span> Open to DevOps & Cloud opportunities</div>
+    <h1>Building <span class="gradient">reliable cloud</span> systems that ship.</h1>
+    <p>DevOps Engineer · Cloud Engineer · Automation Specialist. 7.5 years of IT experience with 5+ years focused on DevOps, AWS cloud infrastructure, automation and CI/CD engineering, plus 2+ years in Enterprise Content Management.</p>
+    <div class="heroMeta"><span>☁ AWS</span><span>⚙ Terraform</span><span>◈ Kubernetes</span><span>♻ CI/CD</span><span>🐳 Docker</span><span>📈 Observability</span></div>
+    <div class="actions"><a class="primary" href="#projects">Explore My Work →</a><a class="secondary" href="https://www.linkedin.com/in/ayush-kumar-b46614235/" target="_blank">LinkedIn ↗</a><a class="secondary" href="https://github.com/Ayush007Kumar" target="_blank">GitHub ↗</a></div>
+    <div class="bigStats"><div class="stat"><b>7.5+</b><small>Years IT Experience</small></div><div class="stat"><b>5+</b><small>Years DevOps</small></div><div class="stat"><b>AWS</b><small>Cloud Specialization</small></div><div class="stat"><b>24.x</b><small>Documentum Experience</small></div></div>
+  </div>
+  <div class="terminal">
+    <div class="termbar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="termtitle">ayush@cloud-engineer:~</span></div>
+    <div class="termbody">
+      <div class="termline"><span class="prompt">$</span> <span class="cmd">whoami</span></div>
+      <div class="termline">Ayush Kumar — DevOps & Cloud Engineer</div>
+      <div class="termline"><span class="prompt">$</span> <span class="cmd">cat mission.txt</span></div>
+      <div class="termline">Automate. Scale. Secure. Observe. Deliver.</div>
+      <div class="termline"><span class="prompt">$</span> <span class="cmd">kubectl get skills</span></div>
+      <div class="termline">AWS&nbsp;&nbsp; Terraform&nbsp;&nbsp; Kubernetes&nbsp;&nbsp; Jenkins&nbsp;&nbsp; Docker</div>
+      <div class="termline">Ansible&nbsp; Helm&nbsp;&nbsp;&nbsp;&nbsp; Prometheus&nbsp; Grafana</div>
+      <div class="termline"><span class="prompt">$</span> <span class="cmd">echo $STATUS</span></div>
+      <div class="termline" style="color:var(--good)">PRODUCTION READY ✓</div>
+      <div class="termline"><span class="comment"># Infrastructure as Code • CI/CD • Cloud • Automation</span></div>
     </div>
-  </header>
+  </div>
+</section>
 
-  <nav class="categories">
-    <div class="categories-inner">
-      <div class="cat"><div class="cat-icon">🏷️</div>Top Offers</div>
-      <div class="cat"><div class="cat-icon">📱</div>Mobiles</div>
-      <div class="cat"><div class="cat-icon">👕</div>Fashion</div>
-      <div class="cat"><div class="cat-icon">💻</div>Electronics</div>
-      <div class="cat"><div class="cat-icon">🛋️</div>Home</div>
-      <div class="cat"><div class="cat-icon">📺</div>Appliances</div>
-      <div class="cat"><div class="cat-icon">✈️</div>Travel</div>
-      <div class="cat"><div class="cat-icon">🧸</div>Beauty & Toys</div>
-      <div class="cat"><div class="cat-icon">🛵</div>Two Wheelers</div>
-    </div>
-  </nav>
+<section id="about"><div class="container reveal">
+  <div class="sectionHead"><div><div class="kicker">Profile</div><h2>Engineering with an automation-first mindset.</h2></div><p>Focused on scalable infrastructure, repeatable deployments, production troubleshooting and operational efficiency.</p></div>
+  <div class="grid">
+    <article class="card"><div class="icon">☁</div><h3>Cloud Engineering</h3><p>Designing and managing AWS infrastructure across development, testing and database environments with availability, security and scalability in mind.</p></article>
+    <article class="card"><div class="icon">⚙</div><h3>DevOps Automation</h3><p>Building CI/CD pipelines, Infrastructure as Code and configuration automation to reduce manual deployment effort and improve repeatability.</p></article>
+    <article class="card"><div class="icon">◈</div><h3>Production Reliability</h3><p>Kubernetes troubleshooting, observability, load balancing, Auto Scaling, IAM best practices and operational support for production workloads.</p></article>
+  </div>
+</div></section>
 
-  <main class="container">
-    <section class="hero">
-      <article class="slide active">
-        <div class="hero-copy">
-          <div class="eyebrow">Big Saving Days</div>
-          <h1>Deals that make shopping better.</h1>
-          <p>Discover top picks across electronics, fashion and home essentials with exciting prices.</p>
-          <a class="cta" href="#deals">Shop Now</a>
-        </div>
-        <div class="hero-art">🛍️</div>
-      </article>
+<section id="skills"><div class="container reveal">
+  <div class="sectionHead"><div><div class="kicker">Technical Arsenal</div><h2>Tools I use to deliver.</h2></div></div>
+  <div class="skills">
+    <div class="skill"><span>AWS Cloud</span><i class="level"></i></div><div class="skill"><span>Terraform</span><i class="level"></i></div><div class="skill"><span>Kubernetes</span><i class="level"></i></div><div class="skill"><span>Jenkins</span><i class="level"></i></div>
+    <div class="skill"><span>Docker</span><i class="level"></i></div><div class="skill"><span>Helm</span><i class="level"></i></div><div class="skill"><span>Ansible</span><i class="level"></i></div><div class="skill"><span>Git / GitHub</span><i class="level"></i></div>
+    <div class="skill"><span>Prometheus</span><i class="level"></i></div><div class="skill"><span>Grafana</span><i class="level"></i></div><div class="skill"><span>CloudWatch</span><i class="level"></i></div><div class="skill"><span>Linux</span><i class="level"></i></div>
+    <div class="skill"><span>EC2 / S3 / IAM</span><i class="level"></i></div><div class="skill"><span>Lambda</span><i class="level"></i></div><div class="skill"><span>EventBridge</span><i class="level"></i></div><div class="skill"><span>Step Functions</span><i class="level"></i></div>
+    <div class="skill"><span>VPC / RDS / EBS</span><i class="level"></i></div><div class="skill"><span>ALB / ELB</span><i class="level"></i></div><div class="skill"><span>Auto Scaling</span><i class="level"></i></div><div class="skill"><span>Storage Gateway</span><i class="level"></i></div>
+  </div>
+</div></section>
 
-      <article class="slide">
-        <div class="hero-copy">
-          <div class="eyebrow">Smartphone Festival</div>
-          <h1>Upgrade your tech today.</h1>
-          <p>Latest smartphones, earbuds, smartwatches and accessories at irresistible offers.</p>
-          <a class="cta" href="#electronics">Explore Electronics</a>
-        </div>
-        <div class="hero-art">📱</div>
-      </article>
+<section id="experience"><div class="container reveal">
+  <div class="sectionHead"><div><div class="kicker">Career</div><h2>Experience that translates to production.</h2></div></div>
+  <div class="timeline">
+    <article class="role"><div class="roleTop"><div><h3>Software Engineer – DevOps and Cloud</h3><div class="company">Commonwealth Bank of Australia (CBA) · Bangalore</div></div><span class="date">Dec 2023 – Present</span></div>
+      <ul><li>Designed and managed AWS infrastructure across development, testing and database environments.</li><li>Built and maintained Jenkins CI/CD pipelines, reducing manual deployment effort.</li><li>Automated infrastructure provisioning with Terraform and configuration management with Ansible.</li><li>Configured Auto Scaling Groups and Load Balancers for high availability.</li><li>Implemented IAM roles, policies and least-privilege security practices.</li><li>Created AMIs for backup and disaster recovery strategies.</li><li>Implemented Prometheus/Grafana dashboards and troubleshot Kubernetes workloads and application deployments.</li></ul>
+    </article>
+    <article class="role"><div class="roleTop"><div><h3>AWS Cloud Analyst</h3><div class="company">Cognizant Technology Solutions Pvt. Ltd. · Client: Novartis Pharmaceuticals</div></div><span class="date">Sep 2018 – Dec 2023</span></div>
+      <p>Worked on AWS-hosted OpenText Documentum environments, including cloud-native Kubernetes/Helm deployments, environment configuration, validation, monitoring and deployment troubleshooting.</p>
+    </article>
+  </div>
+</div></section>
 
-      <article class="slide">
-        <div class="hero-copy">
-          <div class="eyebrow">Fresh Fashion</div>
-          <h1>Style for every season.</h1>
-          <p>Trending clothing, footwear and accessories for men, women and kids.</p>
-          <a class="cta" href="#fashion">Explore Fashion</a>
-        </div>
-        <div class="hero-art">👟</div>
-      </article>
+<section id="projects"><div class="container reveal">
+  <div class="sectionHead"><div><div class="kicker">Selected Projects</div><h2>Architecture, automation & cloud delivery.</h2></div><p>Real-world projects from the resume, presented as recruiter-friendly engineering stories.</p></div>
+  <div class="grid">
+    <article class="card project"><div class="projectTop"><span class="kicker">01 · AWS / Kubernetes</span><span class="number">01</span></div><h3>CBA Award — Microservices E-Commerce</h3><ul><li>Deployed microservices on Kubernetes with rolling deployments.</li><li>GitHub webhooks triggered Jenkins pipelines on code pushes.</li><li>Maven automated builds and artifact creation; Docker containerized services.</li><li>Managed Deployments, Services, Ingress, ConfigMaps and Secrets.</li><li>Prometheus, Grafana and CloudWatch supported monitoring and logging.</li></ul><div class="tags"><span class="tag">AWS</span><span class="tag">Kubernetes</span><span class="tag">Jenkins</span><span class="tag">Docker</span><span class="tag">Maven</span></div></article>
+    <article class="card project"><div class="projectTop"><span class="kicker">02 · Serverless</span><span class="number">02</span></div><h3>Serverless Document Redaction</h3><ul><li>Secure document ingestion through Amazon S3.</li><li>Event-driven workflow using EventBridge, Step Functions and Lambda.</li><li>Lambda functions automatically redact sensitive document data.</li><li>IAM security controls and CloudWatch monitoring.</li><li>Reduced manual document processing and improved automation efficiency.</li></ul><div class="tags"><span class="tag">S3</span><span class="tag">Lambda</span><span class="tag">EventBridge</span><span class="tag">Step Functions</span></div></article>
+    <article class="card project"><div class="projectTop"><span class="kicker">03 · Hybrid Cloud</span><span class="number">03</span></div><h3>On-Premise → AWS Ingestion Pipeline</h3><ul><li>Integrated on-premise systems with AWS using Storage Gateway.</li><li>Batch files transferred into Amazon S3 for scalable processing.</li><li>EventBridge and Step Functions orchestrated ingestion.</li><li>Lambda components included Unzipper, File Validator, Object Validator and Ingestor.</li><li>Secure IAM role-based execution into OpenText Documentum.</li></ul><div class="tags"><span class="tag">Storage Gateway</span><span class="tag">S3</span><span class="tag">Lambda</span><span class="tag">Documentum</span></div></article>
+    <article class="card project"><div class="projectTop"><span class="kicker">04 · Cloud Native</span><span class="number">04</span></div><h3>Documentum Cloud Deployment</h3><ul><li>Deployed OpenText Documentum Cloud using vendor-provided Helm charts.</li><li>Managed Kubernetes deployments with Helm for versioning and release management.</li><li>Hosted containerized workloads on AWS for scalability and reliability.</li><li>Performed environment configuration, validation and troubleshooting.</li><li>Monitored pods, services and deployments to maintain uptime.</li></ul><div class="tags"><span class="tag">AWS</span><span class="tag">Kubernetes</span><span class="tag">Helm</span><span class="tag">Docker</span></div></article>
+  </div>
+</div></section>
 
-      <div class="dots">
-        <button class="dot active" onclick="goToSlide(0)"></button>
-        <button class="dot" onclick="goToSlide(1)"></button>
-        <button class="dot" onclick="goToSlide(2)"></button>
-      </div>
-    </section>
+<section><div class="container reveal">
+  <div class="feature">
+    <div class="featureCard"><div class="kicker">Delivery Pattern</div><h2>From commit to production.</h2><p style="color:var(--muted)">A practical DevOps workflow connecting source control, automation, containers, Kubernetes and observability.</p><div class="flow"><span class="node">GitHub</span><span class="arrow">→</span><span class="node">Jenkins</span><span class="arrow">→</span><span class="node">Maven</span><span class="arrow">→</span><span class="node">Docker</span><span class="arrow">→</span><span class="node">Kubernetes</span><span class="arrow">→</span><span class="node">Prometheus</span><span class="arrow">→</span><span class="node">Grafana</span></div></div>
+    <div class="featureCard"><div class="kicker">Cloud Pattern</div><h2>Event-driven automation.</h2><p style="color:var(--muted)">Designing serverless workflows that move documents from ingestion through validation and processing with secure AWS roles and observable execution.</p><div class="flow"><span class="node">S3</span><span class="arrow">→</span><span class="node">EventBridge</span><span class="arrow">→</span><span class="node">Step Functions</span><span class="arrow">→</span><span class="node">Lambda</span><span class="arrow">→</span><span class="node">Documentum</span></div></div>
+  </div>
+</div></section>
 
-    <section class="section" id="deals">
-      <div class="section-header">
-        <h2>🔥 Best Deals on Smartphones</h2>
-        <a class="view-all" href="#">VIEW ALL</a>
-      </div>
-      <div class="products">
-        <div class="product" data-name="5g smartphone mobile">
-          <div class="product-img">📱</div>
-          <div class="product-title">Nova X5 5G Smartphone</div>
-          <span class="price">₹14,999</span><span class="old-price">₹19,999</span>
-          <span class="discount">25% off</span>
-          <div><span class="rating">4.4 ★</span></div>
-        </div>
-        <div class="product" data-name="android smartphone mobile">
-          <div class="product-img">📱</div>
-          <div class="product-title">PixelMax A12</div>
-          <span class="price">₹18,499</span><span class="old-price">₹22,999</span>
-          <span class="discount">19% off</span>
-          <div><span class="rating">4.3 ★</span></div>
-        </div>
-        <div class="product" data-name="camera smartphone mobile">
-          <div class="product-img">📱</div>
-          <div class="product-title">Vision Pro Lite</div>
-          <span class="price">₹21,990</span><span class="old-price">₹27,990</span>
-          <span class="discount">21% off</span>
-          <div><span class="rating">4.5 ★</span></div>
-        </div>
-        <div class="product" data-name="budget phone mobile">
-          <div class="product-img">📱</div>
-          <div class="product-title">Moto Edge Neo</div>
-          <span class="price">₹12,999</span><span class="old-price">₹16,499</span>
-          <span class="discount">21% off</span>
-          <div><span class="rating">4.2 ★</span></div>
-        </div>
-        <div class="product" data-name="premium phone mobile">
-          <div class="product-img">📱</div>
-          <div class="product-title">Zen One Ultra</div>
-          <span class="price">₹31,999</span><span class="old-price">₹39,999</span>
-          <span class="discount">20% off</span>
-          <div><span class="rating">4.6 ★</span></div>
-        </div>
-        <div class="product" data-name="smartphone mobile">
-          <div class="product-img">📱</div>
-          <div class="product-title">Spark Note 12</div>
-          <span class="price">₹9,999</span><span class="old-price">₹13,499</span>
-          <span class="discount">26% off</span>
-          <div><span class="rating">4.1 ★</span></div>
-        </div>
-      </div>
-    </section>
+<section id="certifications"><div class="container reveal">
+  <div class="sectionHead"><div><div class="kicker">Credentials</div><h2>Certifications & recognition.</h2></div></div>
+  <div class="certgrid">
+    <div class="cert"><b>AWS Certified Solutions Architect – Associate</b><span>AWS</span></div>
+    <div class="cert"><b>AWS Certified Cloud Practitioner</b><span>AWS</span></div>
+    <div class="cert"><b>Microsoft Azure Fundamentals</b><span>Microsoft</span></div>
+    <div class="cert"><b>Certified Documentum D2 Business Analyst</b><span>OpenText / Documentum</span></div>
+    <div class="cert"><b>SPOT Award</b><span>Best Performance Recognition</span></div>
+    <div class="cert"><b>B.Tech — Vellore Institute of Technology</b><span>2014 – 2018 · CGPA 7.8</span></div>
+  </div>
+</div></section>
 
-    <div class="promo-grid">
-      <div class="promo">
-        <div>
-          <h3>Top Fashion Picks</h3>
-          <p>Min. 40% off</p>
-        </div>
-        <div class="promo-icon">👗</div>
-      </div>
-      <div class="promo">
-        <div>
-          <h3>Home Makeover</h3>
-          <p>Starting ₹299</p>
-        </div>
-        <div class="promo-icon">🛋️</div>
-      </div>
-      <div class="promo">
-        <div>
-          <h3>Gadget Zone</h3>
-          <p>New launches</p>
-        </div>
-        <div class="promo-icon">🎧</div>
-      </div>
-    </div>
+<section><div class="container reveal">
+  <div class="contact"><div><div class="kicker">Recruiter / Hiring Manager</div><h2>Let's build reliable systems together.</h2><p>For DevOps, Cloud Engineering and automation opportunities, feel free to connect.</p></div><div class="actions"><a class="primary" href="mailto:ayu199496@gmail.com?subject=DevOps%20Opportunity%20-%20Ayush%20Kumar">Email Me →</a><a class="secondary" href="https://github.com/Ayush007Kumar" target="_blank">View GitHub</a></div></div>
+</div></section>
+</main>
 
-    <section class="section" id="electronics">
-      <div class="section-header">
-        <h2>⚡ Best of Electronics</h2>
-        <a class="view-all" href="#">VIEW ALL</a>
-      </div>
-      <div class="products">
-        <div class="product" data-name="wireless headphones electronics">
-          <div class="product-img">🎧</div>
-          <div class="product-title">Wireless Headphones</div>
-          <span class="price">₹1,499</span><span class="old-price">₹2,999</span>
-          <span class="discount">50% off</span>
-          <div><span class="rating">4.3 ★</span></div>
-        </div>
-        <div class="product" data-name="laptop electronics">
-          <div class="product-img">💻</div>
-          <div class="product-title">UltraBook 14 Laptop</div>
-          <span class="price">₹49,990</span><span class="old-price">₹61,990</span>
-          <span class="discount">19% off</span>
-          <div><span class="rating">4.5 ★</span></div>
-        </div>
-        <div class="product" data-name="smartwatch electronics">
-          <div class="product-img">⌚</div>
-          <div class="product-title">Fitness Smartwatch</div>
-          <span class="price">₹2,299</span><span class="old-price">₹4,999</span>
-          <span class="discount">54% off</span>
-          <div><span class="rating">4.2 ★</span></div>
-        </div>
-        <div class="product" data-name="camera electronics">
-          <div class="product-img">📷</div>
-          <div class="product-title">Mirrorless Camera</div>
-          <span class="price">₹54,990</span><span class="old-price">₹62,990</span>
-          <span class="discount">12% off</span>
-          <div><span class="rating">4.7 ★</span></div>
-        </div>
-        <div class="product" data-name="speaker electronics">
-          <div class="product-img">🔊</div>
-          <div class="product-title">Portable Bluetooth Speaker</div>
-          <span class="price">₹1,799</span><span class="old-price">₹3,299</span>
-          <span class="discount">45% off</span>
-          <div><span class="rating">4.4 ★</span></div>
-        </div>
-        <div class="product" data-name="keyboard electronics">
-          <div class="product-img">⌨️</div>
-          <div class="product-title">Mechanical Keyboard</div>
-          <span class="price">₹2,699</span><span class="old-price">₹4,299</span>
-          <span class="discount">37% off</span>
-          <div><span class="rating">4.6 ★</span></div>
-        </div>
-      </div>
-    </section>
+<footer><div class="container">© 2026 Ayush Kumar · DevOps Engineer · Cloud Engineer · Automation Specialist · Bangalore, Karnataka, India</div></footer>
+<div class="toast" id="toast">Copied</div>
 
-    <section class="section" id="fashion">
-      <div class="section-header">
-        <h2>👕 Fashion Top Deals</h2>
-        <a class="view-all" href="#">VIEW ALL</a>
-      </div>
-      <div class="products">
-        <div class="product" data-name="men tshirt fashion">
-          <div class="product-img">👕</div>
-          <div class="product-title">Men's Premium T-Shirt</div>
-          <span class="price">₹499</span><span class="old-price">₹999</span>
-          <span class="discount">50% off</span>
-          <div><span class="rating">4.2 ★</span></div>
-        </div>
-        <div class="product" data-name="shoes sneakers fashion">
-          <div class="product-img">👟</div>
-          <div class="product-title">Running Sneakers</div>
-          <span class="price">₹1,399</span><span class="old-price">₹2,799</span>
-          <span class="discount">50% off</span>
-          <div><span class="rating">4.4 ★</span></div>
-        </div>
-        <div class="product" data-name="women bag fashion">
-          <div class="product-img">👜</div>
-          <div class="product-title">Classic Handbag</div>
-          <span class="price">₹899</span><span class="old-price">₹1,699</span>
-          <span class="discount">47% off</span>
-          <div><span class="rating">4.3 ★</span></div>
-        </div>
-        <div class="product" data-name="sunglasses fashion">
-          <div class="product-img">🕶️</div>
-          <div class="product-title">UV Protection Sunglasses</div>
-          <span class="price">₹599</span><span class="old-price">₹1,299</span>
-          <span class="discount">53% off</span>
-          <div><span class="rating">4.1 ★</span></div>
-        </div>
-        <div class="product" data-name="watch fashion">
-          <div class="product-img">⌚</div>
-          <div class="product-title">Analog Wrist Watch</div>
-          <span class="price">₹1,199</span><span class="old-price">₹2,499</span>
-          <span class="discount">52% off</span>
-          <div><span class="rating">4.4 ★</span></div>
-        </div>
-        <div class="product" data-name="backpack fashion">
-          <div class="product-img">🎒</div>
-          <div class="product-title">Travel Backpack</div>
-          <span class="price">₹749</span><span class="old-price">₹1,499</span>
-          <span class="discount">50% off</span>
-          <div><span class="rating">4.3 ★</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="newsletter">
-      <div>
-        <h3>Get the best offers first</h3>
-        <p>Subscribe to receive deal alerts and new product updates.</p>
-      </div>
-      <form class="newsletter-form" onsubmit="subscribe(event)">
-        <input type="email" id="email" placeholder="Enter your email" required>
-        <button>Subscribe</button>
-      </form>
-    </section>
-  </main>
-
-  <footer id="footer">
-    <div class="footer-grid">
-      <div>
-        <div class="logo"><span class="logo-badge">S</span>ShopKart</div>
-        <p style="max-width:430px;line-height:1.7;font-size:13px">
-          A demo marketplace storefront built with HTML, CSS and JavaScript.
-          Use it as a frontend starter for your e-commerce project.
-        </p>
-      </div>
-      <div>
-        <h4>About</h4>
-        <a href="#">Contact Us</a>
-        <a href="#">About Us</a>
-        <a href="#">Careers</a>
-        <a href="#">Press</a>
-      </div>
-      <div>
-        <h4>Help</h4>
-        <a href="#">Payments</a>
-        <a href="#">Shipping</a>
-        <a href="#">Cancellation & Returns</a>
-        <a href="#">FAQ</a>
-      </div>
-      <div>
-        <h4>Policy</h4>
-        <a href="#">Return Policy</a>
-        <a href="#">Terms of Use</a>
-        <a href="#">Security</a>
-        <a href="#">Privacy</a>
-      </div>
-    </div>
-    <div class="copyright">© 2026 ShopKart. Demo e-commerce frontend.</div>
-  </footer>
-
-  <div class="toast" id="toast">Done</div>
-
-  <script>
-    let currentSlide = 0;
-    const slides = [...document.querySelectorAll('.slide')];
-    const dots = [...document.querySelectorAll('.dot')];
-
-    function goToSlide(index){
-      slides[currentSlide].classList.remove('active');
-      dots[currentSlide].classList.remove('active');
-      currentSlide = index;
-      slides[currentSlide].classList.add('active');
-      dots[currentSlide].classList.add('active');
-    }
-
-    setInterval(() => goToSlide((currentSlide + 1) % slides.length), 4500);
-
-    function showToast(message){
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.classList.add('show');
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
-    }
-
-    function searchProducts(event){
-      event.preventDefault();
-      const q = document.getElementById('searchInput').value.trim().toLowerCase();
-      if(!q){ showToast('Type something to search'); return; }
-
-      const products = [...document.querySelectorAll('.product')];
-      const matches = products.filter(p => (p.dataset.name + ' ' + p.innerText).toLowerCase().includes(q));
-
-      products.forEach(p => p.style.outline = '');
-      matches.forEach(p => p.style.outline = '2px solid #2874f0');
-
-      if(matches.length){
-        matches[0].scrollIntoView({behavior:'smooth', block:'center'});
-        showToast(`${matches.length} matching product${matches.length > 1 ? 's' : ''} found`);
-      } else {
-        showToast('No matching products found');
-      }
-    }
-
-    function subscribe(event){
-      event.preventDefault();
-      const email = document.getElementById('email').value;
-      showToast(`Subscribed: ${email}`);
-      event.target.reset();
-    }
-
-    document.querySelectorAll('.product').forEach(card => {
-      card.addEventListener('click', () => {
-        const title = card.querySelector('.product-title').textContent;
-        showToast(`${title} selected`);
-      });
-    });
-  </script>
+<script>
+const header=document.getElementById('header');
+addEventListener('scroll',()=>header.classList.toggle('scrolled',scrollY>20));
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(x=>observer.observe(x));
+document.querySelectorAll('.skill').forEach((el,i)=>{el.style.transitionDelay=(i%8)*35+'ms'});
+</script>
 </body>
 </html>
