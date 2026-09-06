@@ -1,5 +1,5 @@
 #To deploy the index.html pages to GitHub Pages (service by github that runs static website)
-name: Deploy Static Site
+name: Deploy Portfolio Site
 #when does this workflow runs 
 on:
   #push:
