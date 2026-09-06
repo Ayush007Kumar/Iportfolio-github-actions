@@ -7,13 +7,13 @@ on:
 jobs:
  #CI
   code:
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     steps:
       - name: Clone the code
         run: echo "Code Cloned"
   build:
     needs: code
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     steps:
       - name: Build the code with Docker
         run: echo "Code Build"
@@ -27,7 +27,7 @@ jobs:
     #CD
   deploy:
     needs: [code,build,test]
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     steps:
       - name: "Deploy the App on server"
         run: echo "Application Deployed"
